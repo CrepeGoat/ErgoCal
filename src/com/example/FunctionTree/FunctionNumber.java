@@ -1,8 +1,10 @@
 package com.example.FunctionTree;
+import com.example.FunctionPresentation.DisplayNum;
 
 public final class FunctionNumber implements FunctionObject{
 	// Internal value holder
 	private double value;
+	private DisplayNum display;
 	
 	// Constructor
 	public FunctionNumber(double v)
@@ -21,6 +23,11 @@ public final class FunctionNumber implements FunctionObject{
 	public int numberOfArguments()
 	{
 		return 0;
+	}
+	
+	public String getDisplay()
+	{
+		return display.getDisplay(String.valueOf(value));
 	}
 	
 	// Other Methods

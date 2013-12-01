@@ -8,4 +8,6 @@ public interface FunctionObject {
 	public double calculate();
 	public void clear();
 	public int numberOfArguments();
+	
+	public String getDisplay();
 }

@@ -1,6 +1,6 @@
 package com.example.FunctionDictionary;
 
-public final class FunctionAdd implements BareFunction2Arg {
+public final class FunctionAdd implements Functor2Arg {
 
 	@Override
 	public double calculate(double arg1, double arg2) {
