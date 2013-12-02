@@ -1,18 +1,19 @@
 package com.example.FunctionTree;
-import com.example.FunctionPresentation.DisplayNum;
+import com.example.FunctionPresentation.TextRepInterface;
 
-public final class FunctionNumber implements FunctionObject{
+public final class FunctionNumber implements FunctionObjectInterface{
 	// Internal value holder
 	private double value;
-	private DisplayNum display;
+	private TextRepInterface display;
 	
 	// Constructor
-	public FunctionNumber(double v)
+	public FunctionNumber(TextRepInterface d, double v)
 	{
 		value = v;
+		display = d;
 	}
 	
-	// FunctionObject Methods
+	// FunctionObjectInterface Methods
 	public double calculate()
 	{
 		return value;
@@ -25,9 +26,9 @@ public final class FunctionNumber implements FunctionObject{
 		return 0;
 	}
 	
-	public String getDisplay()
+	public String getTextRep()
 	{
-		return display.getDisplay(String.valueOf(value));
+		return display.getTextRep(String.valueOf(value));
 	}
 	
 	// Other Methods
