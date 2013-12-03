@@ -24,7 +24,8 @@ public class FunctionNArgument extends FunctionObjectBase {
 	}
 	
 	@Override
-	public double calculate() {
+	public double calculate() throws CalculationException
+	{
 		double temp = func.calculate(
 				argList.get(0).calculate(), 
 				argList.get(1).calculate());

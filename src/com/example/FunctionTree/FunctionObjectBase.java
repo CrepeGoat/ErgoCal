@@ -63,7 +63,7 @@ public abstract class FunctionObjectBase {
 	}
 	
 	//Abstract Methods
-	abstract public double calculate();
+	abstract public double calculate() throws CalculationException;
 	abstract public int numberOfArguments();
 	abstract public String getTextRep();
 }

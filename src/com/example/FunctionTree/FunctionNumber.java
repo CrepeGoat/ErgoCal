@@ -14,7 +14,7 @@ public final class FunctionNumber extends FunctionObjectBase{
 	}
 	
 	// FunctionObjectBase Methods
-	public double calculate()
+	public double calculate() throws CalculationException 
 	{
 		return value;
 	}

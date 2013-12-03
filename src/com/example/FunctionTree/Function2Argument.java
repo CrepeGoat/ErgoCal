@@ -36,7 +36,7 @@ public final class Function2Argument extends FunctionObjectBase{
 	}
 	
 	//Interface functions
-	public double calculate()
+	public double calculate() throws CalculationException
 	{
 		return func.calculate(arg1.calculate(), arg2.calculate());
 	}

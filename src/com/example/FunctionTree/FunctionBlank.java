@@ -10,10 +10,8 @@ public final class FunctionBlank extends FunctionObjectBase {
 	}
 	
 	@Override
-	public double calculate() {
-		
-		//TODO throw exception
-		return 0;
+	public double calculate() throws CalculationException {
+		throw new CalculationException("Undefined function object", this);
 	}
 
 	@Override

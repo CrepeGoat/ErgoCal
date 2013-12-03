@@ -23,7 +23,7 @@ public final class Function1Argument extends FunctionObjectBase{
 		arg = a;
 	}
 	
-	public double calculate()
+	public double calculate() throws CalculationException
 	{
 		return func.calculate(arg.calculate());
 	}
