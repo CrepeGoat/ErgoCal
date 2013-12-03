@@ -9,11 +9,17 @@ public final class FunctionBlank extends FunctionObjectBase {
 		super(FunctionID.BLANK,d);
 	}
 	
+	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	{
+		throw new RuntimeException("No Arguments to Replace");
+	}
+	
 	@Override
 	public double calculate() throws CalculationException {
 		throw new CalculationException("Undefined function object", this);
 	}
 
+	
 	@Override
 	public void close()
 	{
