@@ -2,33 +2,34 @@ package com.example.FunctionTree;
 import com.example.FunctionDictionary.Functor2Arg;
 import com.example.FunctionPresentation.TextRepInterface;
 
-public final class Function2Argument implements FunctionObjectInterface{
-	private FunctionObjectInterface arg1, arg2;
+public final class Function2Argument extends FunctionObjectBase{
+	private FunctionObjectBase arg1, arg2;
 	private Functor2Arg func;
-	private TextRepInterface display;
 	
 	//Constructor
-	public Function2Argument (TextRepInterface d,
+	public Function2Argument (FunctionID i,
+			TextRepInterface d,
 			Functor2Arg f,
-			FunctionObjectInterface a1,
-			FunctionObjectInterface a2)
+			FunctionObjectBase a1,
+			FunctionObjectBase a2)
 	{
+		super(i,d);
 		func = f;
 		display = d;
 		arg1 = a1;
 		arg2 = a2;
 	}
 	
-	public void setArg1(FunctionObjectInterface a1)
+	public void setArg1(FunctionObjectBase a1)
 	{
 		arg1 = a1;
 	}
-	public void setArg2(FunctionObjectInterface a2)
+	public void setArg2(FunctionObjectBase a2)
 	{
 		arg2 = a2;
 	}
-	public void setArgs(FunctionObjectInterface a1,
-			FunctionObjectInterface a2)
+	public void setArgs(FunctionObjectBase a1,
+			FunctionObjectBase a2)
 	{
 		arg1 = a1;
 		arg2 = a2;

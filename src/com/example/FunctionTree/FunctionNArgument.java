@@ -3,22 +3,22 @@ import com.example.FunctionDictionary.Functor2Arg;
 import com.example.FunctionPresentation.TextRepInterface;
 import java.util.ArrayList;
 
-public class FunctionNArgument implements FunctionObjectInterface {
+public class FunctionNArgument extends FunctionObjectBase {
 
-	private TextRepInterface display;
 	private Functor2Arg func;
-	private ArrayList<FunctionObjectInterface> argList;
+	private ArrayList<FunctionObjectBase> argList;
 	
-	public FunctionNArgument(TextRepInterface d,
+	public FunctionNArgument(FunctionID i,
+			TextRepInterface d,
 			Functor2Arg f,
-			ArrayList<FunctionObjectInterface> l)
+			ArrayList<FunctionObjectBase> l)
 	{
-		display = d;
+		super(i,d);
 		func = f;
 		argList = l;
 	}
 	
-	public void addArg(FunctionObjectInterface a)
+	public void addArg(FunctionObjectBase a)
 	{
 		argList.add(a);
 	}

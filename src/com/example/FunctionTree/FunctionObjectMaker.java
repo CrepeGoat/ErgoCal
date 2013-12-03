@@ -6,17 +6,17 @@ import com.example.FunctionPresentation.*;
 public class FunctionObjectMaker {
 	
 	TextRepMakerInterface trmaker;
-	ArrayList<FunctionObjectInterface> argList;
+	ArrayList<FunctionObjectBase> argList;
 	double _number = 0;
 	
 	public FunctionObjectMaker(TextRepMakerInterface trm)
 	{
 		trmaker = trm;
-		argList.add(null);
-		argList.add(null);
+		argList.add(new FunctionBlank(trmaker.makeTextRep(FunctionID.BLANK)));
+		argList.add(new FunctionBlank(trmaker.makeTextRep(FunctionID.BLANK)));
 	}
 	
-	public FunctionObjectMaker arg(FunctionObjectInterface a)
+	public FunctionObjectMaker arg(FunctionObjectBase a)
 	{
 		if (argList.get(0) == null)
 			argList.set(0, a);
@@ -26,7 +26,7 @@ public class FunctionObjectMaker {
 			argList.add(a);
 		return this;
 	}
-	public FunctionObjectMaker arg2(FunctionObjectInterface a)
+	public FunctionObjectMaker arg2(FunctionObjectBase a)
 	{
 		if (argList.get(1) == null)
 			argList.set(1, a);
@@ -42,56 +42,57 @@ public class FunctionObjectMaker {
 		return this;
 	}
 	
-	public FunctionObjectInterface make(FunctionID id)
+	public FunctionObjectBase make(FunctionID id)
 	{
-		FunctionObjectInterface obj;
 		switch (id)
 		{
+		case BLANK:
+			return new FunctionBlank(trmaker.makeTextRep(id));
+		case SOURCE:
+			return new Function1Argument(id,
+					trmaker.makeTextRep(id),
+					new FunctionIdentity(),
+					argList.get(0));
 		case NUMBER:
-			obj = new FunctionNumber(trmaker.makeTextRep(id), 0);
-			break;
+			return new FunctionNumber(trmaker.makeTextRep(id), 0);
 		case ADD:
-			obj = new FunctionNArgument(trmaker.makeTextRep(id),
+			return new FunctionNArgument(id,
+					trmaker.makeTextRep(id),
 					new FunctionAdd(),
 					argList);
-			break;
 		case MULTIPLY:
-			obj = new FunctionNArgument(trmaker.makeTextRep(id),
+			return new FunctionNArgument(id,
+					trmaker.makeTextRep(id),
 					new FunctionMultiply(),
 					argList);
-			break;
 		case SUBTRACT:
-			obj = new Function2Argument(trmaker.makeTextRep(id),
+			return new Function2Argument(id,
+					trmaker.makeTextRep(id),
 					new FunctionSubtract(),
 					argList.get(0), argList.get(1));
-			break;
 		case DIVIDE:
-			obj = new Function2Argument(trmaker.makeTextRep(id),
+			return new Function2Argument(id,
+					trmaker.makeTextRep(id),
 					new FunctionDivide(),
 					argList.get(0), argList.get(1));
-			break;
 		case POWER:
-			obj = new Function2Argument(trmaker.makeTextRep(id),
+			return new Function2Argument(id,
+					trmaker.makeTextRep(id),
 					new FunctionPower(),
 					argList.get(0), argList.get(1));
-			break;
 		case SQUARE:
-			obj = new Function2Argument(trmaker.makeTextRep(id),
+			return new Function2Argument(id,
+					trmaker.makeTextRep(id),
 					new FunctionPower(),
 					argList.get(0),
 					new FunctionNumber(trmaker.makeTextRep(FunctionID.NUMBER),2.0));
-			break;
 		case SQRT:
-			obj = new Function1Argument(trmaker.makeTextRep(id),
+			return new Function1Argument(id,
+					trmaker.makeTextRep(id),
 					new FunctionSqrt(),
 					argList.get(0));
-			break;
 		default:
-			obj = null;
-			break;
+			return null;
 		}
-		
-		return obj;
 	}
-
 }

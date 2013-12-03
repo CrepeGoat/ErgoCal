@@ -1,6 +1,8 @@
 package com.example.FunctionTree;
 
 public enum FunctionID {
+	SOURCE,
+	BLANK,
 	NUMBER,
 	ADD,
 	SUBTRACT,

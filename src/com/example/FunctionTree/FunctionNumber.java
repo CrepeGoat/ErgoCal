@@ -1,7 +1,7 @@
 package com.example.FunctionTree;
 import com.example.FunctionPresentation.TextRepInterface;
 
-public final class FunctionNumber implements FunctionObjectInterface{
+public final class FunctionNumber extends FunctionObjectBase{
 	// Internal value holder
 	private double value;
 	private TextRepInterface display;
@@ -9,11 +9,11 @@ public final class FunctionNumber implements FunctionObjectInterface{
 	// Constructor
 	public FunctionNumber(TextRepInterface d, double v)
 	{
+		super(FunctionID.NUMBER, d);
 		value = v;
-		display = d;
 	}
 	
-	// FunctionObjectInterface Methods
+	// FunctionObjectBase Methods
 	public double calculate()
 	{
 		return value;
