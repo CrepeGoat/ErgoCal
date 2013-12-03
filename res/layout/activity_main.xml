@@ -40,8 +40,8 @@
 		android:layout_marginTop="3pt"
 		android:layout_marginBottom="3pt">
         
-        <TextView 
-			android:id="@+id/ansField"
+        <TextView
+            android:id="@+id/ansField"
 			android:layout_width="0dp" 
 		    android:layout_height="wrap_content"
 	        android:layout_marginLeft="5pt"
@@ -51,7 +51,9 @@
             android:layout_weight="1" 
 	        android:gravity="center_horizontal"
 	        android:textSize="12pt"
-	        android:textColor="@color/orange" />
+	        android:textColor="@color/orange"
+	        android:visibility="visible" 
+	        />"
         
         <EditText
             android:id="@+id/numField"
@@ -65,7 +67,8 @@
 	        android:gravity="center_horizontal"
 	        android:textSize="12pt"  
 			android:inputType="numberDecimal"
-	        android:visibility="gone" 
+			android:imeOptions="actionDone"
+	        android:visibility="gone"
 	        />
         
     </LinearLayout>
@@ -79,9 +82,7 @@
 		android:layout_marginRight="5pt">
 		
 	    <!-- Addition Button -->
-
-        <Button
-            android:id="@+id/btnAdd"
+        <Button android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

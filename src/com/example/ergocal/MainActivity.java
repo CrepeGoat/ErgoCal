@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.view.KeyEvent;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.example.FunctionTree.*;
 import com.example.FunctionPresentation.*;
@@ -62,6 +65,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		btnSqr.setOnClickListener(this);
 		btnSqrt.setOnClickListener(this);
 		
+		numField.setOnEditorActionListener(new OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				// TODO Auto-generated method stub
+			    if (actionId == EditorInfo.IME_ACTION_DONE) {
+			    	// do your stuff here
+			    	ansField.setVisibility(0);
+					numField.setVisibility(2);
+			    }
+			    return false;
+			}
+		});
+		
 		objMaker = new FunctionObjectMaker(new PlainTextRepMaker());
 		sourceObj = (FunctionSource)objMaker.make(FunctionID.SOURCE);
 		selectedObj = sourceObj.getArg();
@@ -104,9 +120,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				//(On completion of number, replace BLANK with NUMBER,
 				//	and store value. Raise exception on incoherent number input.)
 
-				numField.setVisibility(VISIBLE);
+				ansField.setVisibility(2);
+				
+				numField.setVisibility(0);
 				numField.setEnabled(true);
 				numField.setFocusable(true);
+				numField.setImeOptions(EditorInfo.IME_ACTION_DONE);
+				
 			}
 			break;
 		
@@ -165,13 +185,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			
 		case R.id.btnSqr:
 			// When Sqr button is clicked...
-			FunctionObjectBase tmp = objMaker.number(2.0).make(FunctionID.NUMBER);
-			objMaker.clear();
-			selectedObj.getRoot().resetArg(selectedObj, 
-					objMaker
-					.arg(selectedObj)
-					.arg2(tmp)
-					.make(FunctionID.POWER));
+			objMaker.arg(selectedObj);
+			objMaker.arg2()
+			selectedObj.getRoot().resetArg(selectedObj,
+					objMaker.make(FunctionID.SQRT));
 			break;
 			
 		case R.id.btnSqrt:
