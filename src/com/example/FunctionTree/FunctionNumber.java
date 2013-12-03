@@ -39,6 +39,16 @@ public final class FunctionNumber extends FunctionObjectBase{
 		return display.getTextRep(String.valueOf(value));
 	}
 	
+	public void setHighlight() {
+		display.setHighlight();
+	}
+	public void setSubHighlight() {
+		display.setSubHighlight();
+	}
+	public void setNoHighlight() {
+		display.setNoHighlight();
+	}
+	
 	// Other Methods
 	public void set(double v)
 	{

@@ -18,53 +18,45 @@ public abstract class FunctionObjectBase {
 		= new HashMap<Short, FunctionObjectBase>();
 	
 	//Static Tag Methods
-	private static short getNewTag(FunctionObjectBase fobj)
-	{
+	private static short getNewTag(FunctionObjectBase fobj) {
 		while (tagBag.containsKey(lastTag) == false)
 			lastTag += 1;
 		tagBag.put(lastTag, fobj);
 		return lastTag;
 	}
 	
-	public static FunctionObjectBase getTaggedReference(short tag)
-	{
+	public static FunctionObjectBase getTaggedReference(short tag) {
 		return tagBag.get(tag);
 	}
 	
 	//Constructor
-	public FunctionObjectBase(FunctionID i, TextRepInterface d)
-	{
+	public FunctionObjectBase(FunctionID i, TextRepInterface d) {
 		display = d;
 		fid = i;
 		root = null;
 		idTag = getNewTag(this);
 	}
 	
-	//Get-Set root object
-	public FunctionObjectBase getRoot()
-	{
+	//Get root object
+	public FunctionObjectBase getRoot() {
 		return root;
-	}
-	public void setRoot(FunctionObjectBase fobj)
-	{
-		root = fobj;
 	}
 	
 	//Get tag
-	public short getTag()
-	{
+	public short getIdTag() {
 		return idTag;
 	}
 	
 	//Get Function Tag
-	public FunctionID getFID()
-	{
+	public FunctionID getFID() {
 		return fid;
 	}
 	
+	//TODO A more general way of propagating Display commands
+	//public void setTextRepStyle()
+	
 	//Close Function (i.e. de-logs tag)
-	public void close()
-	{
+	public void close() {
 		tagBag.remove(idTag);
 	}
 	
@@ -72,5 +64,13 @@ public abstract class FunctionObjectBase {
 	abstract public double calculate() throws CalculationException;
 	abstract public int numberOfArguments();
 	abstract public void resetArg(FunctionObjectBase old, FunctionObjectBase a);
+
 	abstract public String getTextRep();
+	abstract public void setHighlight();
+	abstract public void setSubHighlight();
+	abstract public void setNoHighlight();
+	//abstract public void setParentheses();
+	//abstract public void setNoParentheses();
+	//abstract public void setTextExpand();
+	//abstract public void setTextCompress();
 }

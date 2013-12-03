@@ -54,6 +54,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		btnSqr = (Button) findViewById(R.id.btnSqr);
 		btnSqrt = (Button) findViewById(R.id.btnSqrt);
 		
+		numField = (EditText) findViewById(R.id.numField);
+		ansField = (EditText) findViewById(R.id.ansField);
+		
 		// set a listener
 		btnEql.setOnClickListener(this);
 		btnNum.setOnClickListener(this);
@@ -93,6 +96,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void setSelectObj(FunctionObjectBase target)
     {
     	//TODO
+    	selectedObj
     }
     
     @Override
@@ -106,10 +110,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			double ans;
 			try {
 				ans = sourceObj.calculate();
+				ansField.setText(String.valueOf(ans));
 			} catch (CalculationException ce){
 				setSelectObj(ce.getCauseObject());
 				//TODO Print warning to screen w/ string
 				//"One or more objects uninitialized"
+				ansField.setText("");
 			};
 			break;
 			

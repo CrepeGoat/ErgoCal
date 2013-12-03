@@ -116,5 +116,21 @@ public class FunctionNArgument extends FunctionObjectBase {
 		
 		return display.getTextRep(temp);
 	}
+	public void setHighlight() {
+		display.setHighlight();
+		for (int i=0; i<argList.size(); ++i)
+			argList.get(i).setSubHighlight();
+	}
+	public void setSubHighlight() {
+		display.setSubHighlight();
+		for (int i=0; i<argList.size(); ++i)
+			argList.get(i).setSubHighlight();
+	}
+	public void setNoHighlight() {
+		display.setNoHighlight();
+		for (int i=0; i<argList.size(); ++i)
+			argList.get(i).setNoHighlight();
+	}
+	
 
 }

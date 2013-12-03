@@ -35,5 +35,15 @@ public final class FunctionBlank extends FunctionObjectBase {
 	public String getTextRep() {
 		return display.getTextRep();
 	}
+	
+	public void setHighlight() {
+		display.setHighlight();
+	}
+	public void setSubHighlight() {
+		display.setSubHighlight();
+	}
+	public void setNoHighlight() {
+		display.setNoHighlight();
+	}
 
 }

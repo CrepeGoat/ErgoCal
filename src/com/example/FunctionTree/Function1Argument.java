@@ -52,4 +52,20 @@ public final class Function1Argument extends FunctionObjectBase{
 	{
 		return display.getTextRep(arg.getTextRep());
 	}
+	
+	public void setHighlight()
+	{
+		display.setHighlight();
+		arg.setSubHighlight();
+	}
+	public void setSubHighlight()
+	{
+		display.setSubHighlight();
+		arg.setSubHighlight();
+	}
+	public void setNoHighlight()
+	{
+		display.setNoHighlight();
+		arg.setNoHighlight();
+	}
 }

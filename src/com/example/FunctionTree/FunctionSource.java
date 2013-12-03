@@ -46,5 +46,10 @@ public final class FunctionSource extends FunctionObjectBase {
 	{
 		return display.getTextRep(arg.getTextRep());
 	}
+	
+	public void setHighlight() {}
+	public void setSubHighlight() {}
+	public void setNoHighlight() {}
+
 
 }
