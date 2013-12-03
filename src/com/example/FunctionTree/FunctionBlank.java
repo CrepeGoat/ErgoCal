@@ -17,7 +17,10 @@ public final class FunctionBlank extends FunctionObjectBase {
 	}
 
 	@Override
-	public void clear() {}
+	public void close()
+	{
+		super.close();
+	}
 
 	@Override
 	public int numberOfArguments() {

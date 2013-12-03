@@ -36,9 +36,12 @@ public class FunctionNArgument extends FunctionObjectBase {
 	}
 
 	@Override
-	public void clear() {
+	public void close()
+	{
+		super.close();
 		for (int i=0; i<argList.size(); ++i)
-			argList.get(i).clear();
+			if (argList.get(i) != null)
+				argList.get(i).close();
 	}
 
 	@Override

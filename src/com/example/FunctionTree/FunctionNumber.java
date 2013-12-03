@@ -19,7 +19,10 @@ public final class FunctionNumber extends FunctionObjectBase{
 		return value;
 	}
 	
-	public void clear() {}
+	public void close()
+	{
+		super.close();
+	}
 	
 	public int numberOfArguments()
 	{

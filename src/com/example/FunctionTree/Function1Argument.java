@@ -28,9 +28,11 @@ public final class Function1Argument extends FunctionObjectBase{
 		return func.calculate(arg.calculate());
 	}
 	
-	public void clear()
+	public void close()
 	{
-		arg.clear();
+		super.close();
+		if (arg != null)
+			arg.close();
 	}
 	public int numberOfArguments()
 	{

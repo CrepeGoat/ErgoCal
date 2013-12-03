@@ -1,6 +1,7 @@
 package com.example.FunctionTree;
 
 import com.example.FunctionPresentation.TextRepInterface;
+import java.util.HashMap;
 
 /*
  * The interface for the function-object components which, when nested,
@@ -8,17 +9,61 @@ import com.example.FunctionPresentation.TextRepInterface;
  */
 public abstract class FunctionObjectBase {
 	protected TextRepInterface display;
-	protected FunctionID id;
+	protected FunctionID fid;
 	
+	protected FunctionObjectBase root;
+	protected short idTag;
+	private static short lastTag = 0;
+	private static HashMap<Short, FunctionObjectBase> tagBag
+		= new HashMap<Short, FunctionObjectBase>();
+	
+	//Static Tag Methods
+	private static short getNewTag(FunctionObjectBase fobj)
+	{
+		while (tagBag.containsKey(lastTag) == false)
+			lastTag += 1;
+		tagBag.put(lastTag, fobj);
+		return lastTag;
+	}
+	
+	public static FunctionObjectBase getTaggedReference(short tag)
+	{
+		return tagBag.get(tag);
+	}
+	
+	//Constructor
 	public FunctionObjectBase(FunctionID i, TextRepInterface d)
 	{
 		display = d;
-		id = i;
+		fid = i;
+		root = null;
+		idTag = getNewTag(this);
 	}
 	
-	abstract public double calculate();
-	abstract public void clear();
-	abstract public int numberOfArguments();
+	//Get-Set root object
+	public FunctionObjectBase getRoot()
+	{
+		return root;
+	}
+	public void setRoot(FunctionObjectBase fobj)
+	{
+		root = fobj;
+	}
 	
+	//Get tag
+	public short getTag()
+	{
+		return idTag;
+	}
+	
+	//Close Function (i.e. de-logs tag)
+	public void close()
+	{
+		tagBag.remove(idTag);
+	}
+	
+	//Abstract Methods
+	abstract public double calculate();
+	abstract public int numberOfArguments();
 	abstract public String getTextRep();
 }
