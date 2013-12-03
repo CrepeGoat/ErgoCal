@@ -12,8 +12,8 @@ public class FunctionObjectMaker {
 	public FunctionObjectMaker(TextRepMakerInterface trm)
 	{
 		trmaker = trm;
-		argList.add(null);
-		argList.add(null);
+		argList.add(new FunctionBlank(trmaker.makeTextRep(FunctionID.BLANK)));
+		argList.add(new FunctionBlank(trmaker.makeTextRep(FunctionID.BLANK)));
 	}
 	
 	public FunctionObjectMaker arg(FunctionObjectBase a)
@@ -33,7 +33,7 @@ public class FunctionObjectMaker {
 		else if (argList.get(0) == null)
 			argList.set(0, a);
 		else
-			argList.add(0, a);
+			argList.add(a);
 		return this;
 	}
 	public FunctionObjectMaker number(double n)
@@ -44,10 +44,6 @@ public class FunctionObjectMaker {
 	
 	public FunctionObjectBase make(FunctionID id)
 	{
-		for (int i=0; i<argList.size(); ++i)
-			if (argList.get(i) == null)
-				argList.set(i, new FunctionBlank(
-						trmaker.makeTextRep(FunctionID.BLANK)));
 		switch (id)
 		{
 		case BLANK:
@@ -58,7 +54,7 @@ public class FunctionObjectMaker {
 					new FunctionIdentity(),
 					argList.get(0));
 		case NUMBER:
-			return new FunctionNumber(trmaker.makeTextRep(id), _number);
+			return new FunctionNumber(trmaker.makeTextRep(id), 0);
 		case ADD:
 			return new FunctionNArgument(id,
 					trmaker.makeTextRep(id),

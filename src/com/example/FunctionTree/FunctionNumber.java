@@ -13,11 +13,6 @@ public final class FunctionNumber extends FunctionObjectBase{
 		value = v;
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
-	{
-		throw new RuntimeException("No Arguments to Replace");
-	}
-	
 	// FunctionObjectBase Methods
 	public double calculate() throws CalculationException 
 	{

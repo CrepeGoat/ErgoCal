@@ -20,42 +20,7 @@ public class FunctionNArgument extends FunctionObjectBase {
 	
 	public void addArg(FunctionObjectBase a)
 	{
-		if (argList.get(0).fid == FunctionID.BLANK)
-			argList.set(0, a);
-		else if (argList.get(1).fid == FunctionID.BLANK)
-			argList.set(1, a);
-		else
-			argList.add(a);
-	}
-	
-	public void addArgReverse(FunctionObjectBase a)
-	{
-		if (argList.get(1).fid == FunctionID.BLANK)
-			argList.set(1, a);
-		else if (argList.get(0).fid == FunctionID.BLANK)
-			argList.set(0, a);
-		else
-			argList.add(0, a);
-	}
-	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
-	{
-		for (int i=0; i<argList.size(); ++i)
-			if (argList.get(i) == old)
-				argList.set(i, a);
-		
-		throw new RuntimeException("Argument not found");
-	}
-	
-	public boolean removeArg(FunctionObjectBase a)
-	{
-		for (int i=0; i<argList.size(); ++i)
-			if (argList.get(i) == a)
-			{
-				argList.remove(i);
-				return false;
-			}
-		return true;
+		argList.add(a);
 	}
 	
 	@Override

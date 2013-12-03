@@ -20,17 +20,20 @@ public final class Function2Argument extends FunctionObjectBase{
 		arg2 = a2;
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void setArg1(FunctionObjectBase a1)
 	{
-		if (arg1 == old)
-			arg1 = a;
-		else if (arg2 == old)
-			arg2 = a;
-		else
-			throw new RuntimeException("Argument not found");
+		arg1 = a1;
 	}
-
-	
+	public void setArg2(FunctionObjectBase a2)
+	{
+		arg2 = a2;
+	}
+	public void setArgs(FunctionObjectBase a1,
+			FunctionObjectBase a2)
+	{
+		arg1 = a1;
+		arg2 = a2;
+	}
 	
 	//Interface functions
 	public double calculate() throws CalculationException

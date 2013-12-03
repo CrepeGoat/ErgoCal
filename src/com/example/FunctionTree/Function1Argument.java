@@ -18,12 +18,9 @@ public final class Function1Argument extends FunctionObjectBase{
 		arg = a;
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void setArg(FunctionObjectBase a)
 	{
-		if (arg == old)
-			arg = a;
-		else
-			throw new RuntimeException("No Arguments to Replace");
+		arg = a;
 	}
 	
 	public double calculate() throws CalculationException

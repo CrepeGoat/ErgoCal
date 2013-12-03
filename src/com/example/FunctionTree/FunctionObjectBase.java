@@ -65,6 +65,5 @@ public abstract class FunctionObjectBase {
 	//Abstract Methods
 	abstract public double calculate() throws CalculationException;
 	abstract public int numberOfArguments();
-	abstract public void resetArg(FunctionObjectBase old, FunctionObjectBase a);
 	abstract public String getTextRep();
 }
