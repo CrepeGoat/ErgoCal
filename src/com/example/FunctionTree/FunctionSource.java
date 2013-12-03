@@ -1,40 +1,34 @@
 package com.example.FunctionTree;
-import com.example.FunctionDictionary.Functor1Arg;
+
 import com.example.FunctionPresentation.TextRepInterface;
 
-public final class Function1Argument extends FunctionObjectBase{
+public final class FunctionSource extends FunctionObjectBase {
 	private FunctionObjectBase arg;
-	private Functor1Arg func;
-	private void setArg(FunctionObjectBase a)
+
+	public FunctionSource(
+			TextRepInterface d,
+			FunctionObjectBase f)
 	{
-		arg = a;
-		if (arg != null)
-			arg.root = this;
+		super(FunctionID.SOURCE, d);
+		arg = f;
 	}
 	
-	//Constructor
-	public Function1Argument (FunctionID i,
-			TextRepInterface d,
-			Functor1Arg f,
-			FunctionObjectBase a)
+	public FunctionObjectBase getArg()
 	{
-		super(i,d);
-		func = f;
-		display = d;
-		setArg(a);
+		return arg;
 	}
 	
 	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		if (arg == old)
-			setArg(a);
+			arg = a;
 		else
 			throw new RuntimeException("No Arguments to Replace");
 	}
 	
 	public double calculate() throws CalculationException
 	{
-		return func.calculate(arg.calculate());
+		return arg.calculate();
 	}
 	
 	public void close()
@@ -52,4 +46,5 @@ public final class Function1Argument extends FunctionObjectBase{
 	{
 		return display.getTextRep(arg.getTextRep());
 	}
+
 }

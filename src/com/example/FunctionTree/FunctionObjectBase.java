@@ -56,6 +56,12 @@ public abstract class FunctionObjectBase {
 		return idTag;
 	}
 	
+	//Get Function Tag
+	public FunctionID getFID()
+	{
+		return fid;
+	}
+	
 	//Close Function (i.e. de-logs tag)
 	public void close()
 	{

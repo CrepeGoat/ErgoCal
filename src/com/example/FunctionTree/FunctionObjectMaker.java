@@ -42,6 +42,12 @@ public class FunctionObjectMaker {
 		return this;
 	}
 	
+	public void clear()
+	{
+		argList.clear();
+		_number = 0;
+	}
+	
 	public FunctionObjectBase make(FunctionID id)
 	{
 		for (int i=0; i<argList.size(); ++i)

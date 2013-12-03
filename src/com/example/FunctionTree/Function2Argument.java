@@ -5,6 +5,18 @@ import com.example.FunctionPresentation.TextRepInterface;
 public final class Function2Argument extends FunctionObjectBase{
 	private FunctionObjectBase arg1, arg2;
 	private Functor2Arg func;
+	private void setArg1(FunctionObjectBase a1)
+	{
+		arg1 = a1;
+		if (arg1 != null)
+			arg1.root = this;
+	}
+	private void setArg2(FunctionObjectBase a2)
+	{
+		arg2 = a2;
+		if (arg2 != null)
+			arg2.root = this;
+	}
 	
 	//Constructor
 	public Function2Argument (FunctionID i,
@@ -16,16 +28,16 @@ public final class Function2Argument extends FunctionObjectBase{
 		super(i,d);
 		func = f;
 		display = d;
-		arg1 = a1;
-		arg2 = a2;
+		setArg1(a1);
+		setArg2(a2);
 	}
 	
 	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		if (arg1 == old)
-			arg1 = a;
+			setArg1(a);
 		else if (arg2 == old)
-			arg2 = a;
+			setArg2(a);
 		else
 			throw new RuntimeException("Argument not found");
 	}

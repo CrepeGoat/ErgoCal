@@ -7,6 +7,15 @@ public class FunctionNArgument extends FunctionObjectBase {
 
 	private Functor2Arg func;
 	private ArrayList<FunctionObjectBase> argList;
+	private void setArg(int n, FunctionObjectBase a)
+	{
+		if (0 <= n && n < argList.size())
+		{
+			argList.set(n, a);
+			if (a != null)
+				a.root = this;
+		}
+	}
 	
 	public FunctionNArgument(FunctionID i,
 			TextRepInterface d,
@@ -16,33 +25,47 @@ public class FunctionNArgument extends FunctionObjectBase {
 		super(i,d);
 		func = f;
 		argList = l;
+		for (int j=0; j<l.size(); ++j)
+			if (l.get(j) != null)
+				l.get(j).root = this;
 	}
 	
 	public void addArg(FunctionObjectBase a)
 	{
-		if (argList.get(0).fid == FunctionID.BLANK)
-			argList.set(0, a);
-		else if (argList.get(1).fid == FunctionID.BLANK)
-			argList.set(1, a);
+		if (argList.get(0).getFID() == FunctionID.BLANK)
+			setArg(0, a);
+		else if (argList.get(1).getFID() == FunctionID.BLANK)
+			setArg(1, a);
 		else
+		{
 			argList.add(a);
+			if (a != null)
+				a.root = this;
+		}
 	}
 	
 	public void addArgReverse(FunctionObjectBase a)
 	{
-		if (argList.get(1).fid == FunctionID.BLANK)
-			argList.set(1, a);
-		else if (argList.get(0).fid == FunctionID.BLANK)
-			argList.set(0, a);
+		if (argList.get(1).getFID() == FunctionID.BLANK)
+			setArg(1, a);
+		else if (argList.get(0).getFID() == FunctionID.BLANK)
+			setArg(0, a);
 		else
+		{
 			argList.add(0, a);
+			if (a != null)
+				a.root = this;
+		}
 	}
 	
 	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		for (int i=0; i<argList.size(); ++i)
 			if (argList.get(i) == old)
-				argList.set(i, a);
+			{
+				setArg(i, a);
+				break;
+			}
 		
 		throw new RuntimeException("Argument not found");
 	}
