@@ -165,10 +165,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			
 		case R.id.btnSqr:
 			// When Sqr button is clicked...
-			objMaker.arg(selectedObj);
-			objMaker.arg2()
-			selectedObj.getRoot().resetArg(selectedObj,
-					objMaker.make(FunctionID.SQRT));
+			FunctionObjectBase tmp = objMaker.number(2.0).make(FunctionID.NUMBER);
+			objMaker.clear();
+			selectedObj.getRoot().resetArg(selectedObj, 
+					objMaker
+					.arg(selectedObj)
+					.arg2(tmp)
+					.make(FunctionID.POWER));
 			break;
 			
 		case R.id.btnSqrt:
