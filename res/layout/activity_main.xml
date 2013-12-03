@@ -1,14 +1,179 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    android:orientation="vertical" 
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+    tools:context=".MainActivity"
+    android:background="@color/light_grey" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+	    android:id="@+id/linearLayout1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="10pt"
+	    android:layout_marginRight="10pt"
+	    android:layout_marginTop="3pt" 
+	    android:layout_marginBottom="3pt">
+        
+        <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="0dp"
+	        android:layout_height="150dp"
+	        android:layout_marginLeft="5pt"
+	        android:layout_marginRight="5pt"
+	        android:layout_marginTop="5pt"
+	        android:layout_marginBottom="5pt"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal"
+	        android:textSize="12pt" />
+        
+    </LinearLayout>
+	
+    <LinearLayout 
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world" />
+        android:layout_marginLeft="10pt" 
+		android:layout_marginRight="10pt"
+		android:layout_marginTop="3pt"
+		android:layout_marginBottom="3pt">
+        
+        <TextView 
+			android:id="@+id/ansField"
+			android:layout_width="0dp" 
+		    android:layout_height="wrap_content"
+	        android:layout_marginLeft="5pt"
+			android:layout_marginRight="5pt"
+	        android:layout_marginTop="5pt"
+	        android:layout_marginBottom="5pt"
+            android:layout_weight="1" 
+	        android:gravity="center_horizontal"
+	        android:textSize="12pt"
+	        android:textColor="@color/orange" />
+        
+        <EditText
+            android:id="@+id/numField"
+            android:layout_width="0dp" 
+		    android:layout_height="wrap_content"
+	        android:layout_marginLeft="5pt"
+			android:layout_marginRight="5pt"
+	        android:layout_marginTop="5pt"
+	        android:layout_marginBottom="5pt"
+            android:layout_weight="1" 
+	        android:gravity="center_horizontal"
+	        android:textSize="12pt"  
+			android:inputType="numberDecimal"
+	        android:visibility="gone" 
+	        />
+        
+    </LinearLayout>
+    
+    <LinearLayout  
+		android:id="@+id/linearLayout3"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="3pt" 
+		android:layout_marginLeft="5pt"
+		android:layout_marginRight="5pt">
+		
+	    <!-- Addition Button -->
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/add"
+            android:textSize="8pt" />
+
+		<!-- Subtraction Button -->
+		<Button android:id="@+id/btnSub"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/sub"
+			android:textSize="8pt" />
+
+		<!-- Multiplication Button -->
+		<Button android:id="@+id/btnMult"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/mult" 
+			android:textSize="8pt" />
+
+		<!-- Division Button -->
+		<Button android:id="@+id/btnDiv"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/div" 
+			android:textSize="8pt" />
+		
+	</LinearLayout>	
+		
+	<LinearLayout
+	    android:id="@+id/linearLayout4"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="0pt" 
+		android:layout_marginLeft="5pt"
+		android:layout_marginRight="5pt">
+    
+        <!-- Power Button -->
+		<Button android:id="@+id/btnPow"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/pow" 
+			android:textSize="8pt"  />
+		
+		<!-- Squared Button -->
+		<Button android:id="@+id/btnSqr" 
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/sqr" 
+			android:textSize="8pt" />
+		
+		<!-- Square Root Button -->
+		<Button android:id="@+id/btnSqrt" 
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/sqrt" 
+			android:textSize="8pt" />
+		
+		<!-- Num Button -->
+		<Button android:id="@+id/btnNum"
+		    android:layout_height="wrap_content"
+			android:layout_width="match_parent" 
+			android:layout_weight="1"
+			android:text="@string/num" 
+			android:textSize="8pt" />
+	
+    </LinearLayout>
+    
+	<LinearLayout 
+	    android:id="@+id/linearLayout5"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="0pt" 
+		android:layout_marginLeft="5pt"
+		android:layout_marginRight="5pt">
+	    
+	    <!-- Equal Button -->
+		<Button android:id="@+id/btnEql" 
+			android:layout_height="40dp"
+			android:layout_width="0dp" 
+			android:layout_weight="1"
+			android:text="@string/equal" 
+			android:textSize="8pt" 
+	        android:gravity="center_horizontal"
+			android:background="@drawable/equal_btn" />
+		
+	</LinearLayout>
+
+</LinearLayout>

@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
 
     <string name="app_name">ErgoCal</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    
+    <!-- Button Strings -->
+    <string name="add">+</string>
+    <string name="sub">–</string>
+    <string name="mult">×</string>
+    <string name="div">÷</string>
+    <string name="pow">^</string>
+    <string name="sqr">x²</string>
+    <string name="sqrt">√</string>
+    <string name="num">Num</string>
+    <string name="equal">=</string>
+    
 
 </resources>
