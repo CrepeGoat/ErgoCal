@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.FunctionTree.*;
@@ -21,7 +22,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	// Initialize Buttons
 	Button btnEql;
 	Button btnNum;
-	
 	Button btnAdd;
 	Button btnSub;
 	Button btnMult;
@@ -29,6 +29,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	Button btnPow;
 	Button btnSqr;
 	Button btnSqrt;
+	
+	// Initialize Edit Text
+	EditText numField;
+	EditText ansField;
 
 	/** Called when the activity is first created. */
     @Override
@@ -99,6 +103,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				//TODO bring up pop-up keyboard
 				//(On completion of number, replace BLANK with NUMBER,
 				//	and store value. Raise exception on incoherent number input.)
+
+				numField.setVisibility(VISIBLE);
+				numField.setEnabled(true);
+				numField.setFocusable(true);
 			}
 			break;
 		
