@@ -1,5 +1,7 @@
 package com.example.FunctionTree;
 import com.example.FunctionDictionary.Functor2Arg;
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 
 public final class Function2Argument extends FunctionObjectBase{
@@ -19,7 +21,7 @@ public final class Function2Argument extends FunctionObjectBase{
 	}
 	
 	//Constructor
-	public Function2Argument (FunctionID i,
+	public Function2Argument (FunctionType i,
 			TextRepInterface d,
 			Functor2Arg f,
 			FunctionObjectBase a1,
@@ -32,7 +34,7 @@ public final class Function2Argument extends FunctionObjectBase{
 		setArg2(a2);
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void replaceArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		if (arg1 == old)
 			setArg1(a);

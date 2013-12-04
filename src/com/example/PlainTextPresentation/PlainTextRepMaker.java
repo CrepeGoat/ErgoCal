@@ -1,13 +1,13 @@
 package com.example.PlainTextPresentation;
 
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 import com.example.FunctionPresentation.TextRepMakerInterface;
-import com.example.FunctionTree.FunctionID;
 
 public class PlainTextRepMaker implements TextRepMakerInterface {
 
 	@Override
-	public TextRepInterface makeTextRep(FunctionID id) {
+	public TextRepInterface makeTextRep(FunctionType id) {
 		
 		String op;
 		boolean loc;

@@ -12,6 +12,8 @@ import android.view.KeyEvent;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.example.FunctionTree.*;
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionID;
 import com.example.FunctionPresentation.*;
 import com.example.PlainTextPresentation.*;
 
@@ -74,8 +76,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				// TODO Auto-generated method stub
 			    if (actionId == EditorInfo.IME_ACTION_DONE) {
 			    	// do your stuff here
-			    	ansField.setVisibility(0);
-					numField.setVisibility(2);
+			    	try {
+			    		double num = Double.parseDouble(numField.getText());
+				    	ansField.setVisibility(0);
+						numField.setVisibility(2);
+						if (selectedObj.getFID() == FunctionID.NUMBER)
+							((FunctionNumber)selectedObj).set(num);
+						else
+						{
+							selectedObj.getRoot().replaceArg(selectedObj,
+									objMaker.number(num).make(FunctionID.NUMBER));
+							objMaker.clear();
+						}
+			    	} catch (NumberFormatException e) {
+			    		//TODO raise alert
+			    	}
+					
 			    }
 			    return false;
 			}
@@ -96,7 +112,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void setSelectObj(FunctionObjectBase target)
     {
     	//TODO
-    	selectedObj
+    	//selectedObj
+    }
+    
+    public void insertNewAtSelection(FunctionID ftype)
+    {
+    	FunctionObjectBase rootObj = selectedObj.getRoot();
+    	FunctionObjectBase newObj = objMaker.make(ftype);
+    	rootObj.replaceArg(selectedObj, objMaker.make(ftype));
+    	setSelectObj
     }
     
     @Override
@@ -147,7 +171,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			else
 			{
 				objMaker.arg(selectedObj);
-				selectedObj.getRoot().resetArg(selectedObj,
+				selectedObj.getRoot().replaceArg(selectedObj,
 						objMaker.make(FunctionID.ADD));
 			}
 			break;
@@ -155,7 +179,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		case R.id.btnSub:
 			// When Sub button is clicked...
 			objMaker.arg(selectedObj);
-			selectedObj.getRoot().resetArg(selectedObj,
+			selectedObj.getRoot().replaceArg(selectedObj,
 					objMaker.make(FunctionID.SUBTRACT));
 			break;
 			
@@ -170,7 +194,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			else
 			{
 				objMaker.arg(selectedObj);
-				selectedObj.getRoot().resetArg(selectedObj,
+				selectedObj.getRoot().replaceArg(selectedObj,
 						objMaker.make(FunctionID.MULTIPLY));
 			}			
 			break;
@@ -178,29 +202,29 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		case R.id.btnDiv:
 			// When Div button is clicked...
 			objMaker.arg(selectedObj);
-			selectedObj.getRoot().resetArg(selectedObj,
+			selectedObj.getRoot().replaceArg(selectedObj,
 					objMaker.make(FunctionID.DIVIDE));
 			break;
 			
 		case R.id.btnPow:
 			// When Pow button is clicked...
 			objMaker.arg(selectedObj);
-			selectedObj.getRoot().resetArg(selectedObj,
+			selectedObj.getRoot().replaceArg(selectedObj,
 					objMaker.make(FunctionID.POWER));
 			break;
 			
 		case R.id.btnSqr:
 			// When Sqr button is clicked...
-			objMaker.arg(selectedObj);
-			objMaker.arg2()
-			selectedObj.getRoot().resetArg(selectedObj,
-					objMaker.make(FunctionID.SQRT));
+			objMaker.number(2.0);
+			objMaker.arg(selectedObj).arg2(objMaker.make(FunctionID.NUMBER));
+			selectedObj.getRoot().replaceArg(selectedObj,
+					objMaker.make(FunctionID.SQUARE));
 			break;
 			
 		case R.id.btnSqrt:
 			// When Sqrt button is clicked...
 			objMaker.arg(selectedObj);
-			selectedObj.getRoot().resetArg(selectedObj,
+			selectedObj.getRoot().replaceArg(selectedObj,
 					objMaker.make(FunctionID.SQRT));
 			break;
 

@@ -44,6 +44,8 @@ public final class PlainTextRepObject implements TextRepInterface{
 	public void setSubHighlight() {}
 
 	public void setNoHighlight() {}
+	
+	public void setIdTag(int idTag) {}
 
 	
 }

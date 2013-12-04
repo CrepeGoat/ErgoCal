@@ -6,6 +6,8 @@ public interface TextRepInterface {
 	public String getTextRep(String disp1, String disp2);
 	public String getTextRep(String[] strList);
 	
+	public void setIdTag(int idTag);
+	
 	public void setHighlight();
 	public void setSubHighlight();
 	public void setNoHighlight();

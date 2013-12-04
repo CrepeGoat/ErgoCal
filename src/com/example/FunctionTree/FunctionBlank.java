@@ -1,15 +1,17 @@
 package com.example.FunctionTree;
 
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 
 public final class FunctionBlank extends FunctionObjectBase {
 
 	public FunctionBlank(TextRepInterface d)
 	{
-		super(FunctionID.BLANK,d);
+		super(FunctionType.BLANK,d);
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void replaceArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		throw new RuntimeException("No Arguments to Replace");
 	}

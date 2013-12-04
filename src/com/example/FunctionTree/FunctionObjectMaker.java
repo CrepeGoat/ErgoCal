@@ -1,6 +1,7 @@
 package com.example.FunctionTree;
 import java.util.ArrayList;
 import com.example.FunctionDictionary.*;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.*;
 
 public class FunctionObjectMaker {
@@ -48,12 +49,12 @@ public class FunctionObjectMaker {
 		_number = 0;
 	}
 	
-	public FunctionObjectBase make(FunctionID id)
+	public FunctionObjectBase make(FunctionType id)
 	{
 		for (int i=0; i<argList.size(); ++i)
 			if (argList.get(i) == null)
 				argList.set(i, new FunctionBlank(
-						trmaker.makeTextRep(FunctionID.BLANK)));
+						trmaker.makeTextRep(FunctionType.BLANK)));
 		switch (id)
 		{
 		case BLANK:
@@ -95,7 +96,7 @@ public class FunctionObjectMaker {
 					trmaker.makeTextRep(id),
 					new FunctionPower(),
 					argList.get(0),
-					new FunctionNumber(trmaker.makeTextRep(FunctionID.NUMBER),2.0));
+					new FunctionNumber(trmaker.makeTextRep(FunctionType.NUMBER),2.0));
 		case SQRT:
 			return new Function1Argument(id,
 					trmaker.makeTextRep(id),

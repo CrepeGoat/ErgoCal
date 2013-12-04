@@ -1,15 +1,18 @@
 package com.example.FunctionTree;
 
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 
-public final class FunctionSource extends FunctionObjectBase {
+public final class FunctionSource
+extends FunctionObjectBase {
 	private FunctionObjectBase arg;
 
 	public FunctionSource(
 			TextRepInterface d,
 			FunctionObjectBase f)
 	{
-		super(FunctionID.SOURCE, d);
+		super(FunctionType.SOURCE, d);
 		arg = f;
 	}
 	
@@ -18,7 +21,7 @@ public final class FunctionSource extends FunctionObjectBase {
 		return arg;
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void replaceArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		if (arg == old)
 			arg = a;

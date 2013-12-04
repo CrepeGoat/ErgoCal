@@ -1,4 +1,6 @@
 package com.example.FunctionTree;
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 
 public final class FunctionNumber extends FunctionObjectBase{
@@ -9,11 +11,11 @@ public final class FunctionNumber extends FunctionObjectBase{
 	// Constructor
 	public FunctionNumber(TextRepInterface d, double v)
 	{
-		super(FunctionID.NUMBER, d);
+		super(FunctionType.NUMBER, d);
 		value = v;
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void replaceArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		throw new RuntimeException("No Arguments to Replace");
 	}

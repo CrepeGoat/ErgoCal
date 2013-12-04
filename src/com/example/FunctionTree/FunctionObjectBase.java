@@ -1,5 +1,7 @@
 package com.example.FunctionTree;
 
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 import java.util.HashMap;
 
@@ -9,7 +11,7 @@ import java.util.HashMap;
  */
 public abstract class FunctionObjectBase {
 	protected TextRepInterface display;
-	protected FunctionID fid;
+	protected FunctionType fid;
 	
 	protected FunctionObjectBase root;
 	protected short idTag;
@@ -30,7 +32,7 @@ public abstract class FunctionObjectBase {
 	}
 	
 	//Constructor
-	public FunctionObjectBase(FunctionID i, TextRepInterface d) {
+	public FunctionObjectBase(FunctionType i, TextRepInterface d) {
 		display = d;
 		fid = i;
 		root = null;
@@ -48,7 +50,7 @@ public abstract class FunctionObjectBase {
 	}
 	
 	//Get Function Tag
-	public FunctionID getFID() {
+	public FunctionType getFID() {
 		return fid;
 	}
 	
@@ -63,7 +65,7 @@ public abstract class FunctionObjectBase {
 	//Abstract Methods
 	abstract public double calculate() throws CalculationException;
 	abstract public int numberOfArguments();
-	abstract public void resetArg(FunctionObjectBase old, FunctionObjectBase a);
+	abstract public void replaceArg(FunctionObjectBase old, FunctionObjectBase a);
 
 	abstract public String getTextRep();
 	abstract public void setHighlight();

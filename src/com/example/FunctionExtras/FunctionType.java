@@ -1,6 +1,6 @@
-package com.example.FunctionTree;
+package com.example.FunctionExtras;
 
-public enum FunctionID {
+public enum FunctionType {
 	SOURCE,
 	BLANK,
 	NUMBER,

@@ -1,5 +1,7 @@
 package com.example.FunctionTree;
 import com.example.FunctionDictionary.Functor2Arg;
+import com.example.FunctionExtras.CalculationException;
+import com.example.FunctionExtras.FunctionType;
 import com.example.FunctionPresentation.TextRepInterface;
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ public class FunctionNArgument extends FunctionObjectBase {
 		}
 	}
 	
-	public FunctionNArgument(FunctionID i,
+	public FunctionNArgument(FunctionType i,
 			TextRepInterface d,
 			Functor2Arg f,
 			ArrayList<FunctionObjectBase> l)
@@ -32,9 +34,9 @@ public class FunctionNArgument extends FunctionObjectBase {
 	
 	public void addArg(FunctionObjectBase a)
 	{
-		if (argList.get(0).getFID() == FunctionID.BLANK)
+		if (argList.get(0).getFID() == FunctionType.BLANK)
 			setArg(0, a);
-		else if (argList.get(1).getFID() == FunctionID.BLANK)
+		else if (argList.get(1).getFID() == FunctionType.BLANK)
 			setArg(1, a);
 		else
 		{
@@ -46,9 +48,9 @@ public class FunctionNArgument extends FunctionObjectBase {
 	
 	public void addArgReverse(FunctionObjectBase a)
 	{
-		if (argList.get(1).getFID() == FunctionID.BLANK)
+		if (argList.get(1).getFID() == FunctionType.BLANK)
 			setArg(1, a);
-		else if (argList.get(0).getFID() == FunctionID.BLANK)
+		else if (argList.get(0).getFID() == FunctionType.BLANK)
 			setArg(0, a);
 		else
 		{
@@ -58,7 +60,7 @@ public class FunctionNArgument extends FunctionObjectBase {
 		}
 	}
 	
-	public void resetArg(FunctionObjectBase old, FunctionObjectBase a)
+	public void replaceArg(FunctionObjectBase old, FunctionObjectBase a)
 	{
 		for (int i=0; i<argList.size(); ++i)
 			if (argList.get(i) == old)

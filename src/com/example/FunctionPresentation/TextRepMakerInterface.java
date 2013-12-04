@@ -1,8 +1,8 @@
 package com.example.FunctionPresentation;
-import com.example.FunctionTree.FunctionID;
+import com.example.FunctionExtras.FunctionType;
 
 public interface TextRepMakerInterface {
 	
-	public TextRepInterface makeTextRep(FunctionID id);
+	public TextRepInterface makeTextRep(FunctionType id);
 
 }
