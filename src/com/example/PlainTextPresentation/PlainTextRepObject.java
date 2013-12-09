@@ -3,39 +3,51 @@ import com.example.FunctionPresentation.TextRepInterface;
 
 public final class PlainTextRepObject implements TextRepInterface{
 
-	private String prefix, infix, suffix;
+	private String[] strList;
+	
+	public PlainTextRepObject(String[] inList) {
+		strList = inList;
+	}
+	public PlainTextRepObject(String p, String i, String s) {
+		int n = 0;
+		if (p != null)
+			++n;
+		if (i != null)
+			++n;
+		if (s != null)
+			++n;
+		strList = new String[n];
 
-	public PlainTextRepObject(String p, String i, String s)
-	{
-		prefix = new String(p);
-		infix = new String(i);
-		suffix = new String(s);
+		n = 0;
+		if (p != null) {
+			strList[n] = p;
+			++n;
+		}
+		if (i != null) {
+			strList[n] = i;
+			++n;
+		}
+		if (s != null) {
+			strList[n] = s;
+			++n;
+		}
 	}
-	
-	public String getTextRep()
-	{
-		return infix;
-	}
-	
-	public String getTextRep(String disp)
-	{
-		return prefix + disp + suffix;
-	}
-	
-	public String getTextRep(String disp1, String disp2)
-	{
-		return prefix + disp1 + infix + disp2 + suffix;
-	}
-	
-	public String getTextRep(String[] strList)
-	{
-		String temp = prefix + strList[0];
 		
-		//Note - assumes that there is AT LEAST 1 string in list
-		for (int i=1; i<strList.length; ++i)
-			temp = temp + infix + strList[i];
-		temp = temp + suffix;
-		
+	public String getTextRep(String[] inList)
+	{
+		String temp = strList[0];
+
+		if (inList.length > 0) {
+			temp += inList[0] + strList[1];
+			
+			if (inList.length > 1) {
+				temp += inList[1];
+				for (int i=2; i<inList.length; ++i) {
+					temp += strList[1] + inList[i];
+				}
+				temp += strList[2];
+			}
+		}
 		return temp;
 	}
 	

@@ -1,36 +1,43 @@
 package com.example.OperatorStack;
 
-import com.example.FunctionExtras.FunctionType;
-import com.example.FunctionList.FunctionInterface;
+import com.example.FunctionExtras.*;
 import com.example.FunctionPresentation.TextRepInterface;
 
-
-class OperatorBase {
+abstract class OperatorBase {
 	
+	abstract public double getResult(double[] dList) throws CalculationException;
+
 	private FunctionType ftype;
 	private TextRepInterface display;
-	private FunctionInterface func;
-	private int count;
+	private int argCount;
+	
+	public OperatorBase(FunctionType ft,
+			TextRepInterface tr,
+			int count) {
+		ftype = ft;
+		display = tr;
+		argCount = count;
+	}
 	
 	public int getArgCount() {
-		return count;
+		return argCount;
 	}
 	public void incrementArgCount() {
-		++count;
+		++argCount;
 	}
-	public void decrementArgCount()
-	{
-		--count;
+	public void decrementArgCount() {
+		--argCount;
 	}
 	
-	public double getResult(double[] dList) {
-		return func.calculate(dList);
+	public FunctionType getFuncType() {
+		return ftype;
 	}
+	
 	public String getTextRep(String[] strList) {
 		return display.getTextRep(strList);
 	}
 	public void setIdTag(int i) {
-		//TODO
+		display.setIdTag(i);
 	}
 
 }

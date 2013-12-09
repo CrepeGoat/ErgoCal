@@ -1,4 +1,4 @@
-package com.example.FunctionList;
+package com.example.FunctionDictionary;
 
 public interface FunctionInterface {
 

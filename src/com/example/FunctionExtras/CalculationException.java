@@ -1,21 +1,17 @@
 package com.example.FunctionExtras;
 
-import com.example.FunctionTree.FunctionObjectBase;
-
 public final class CalculationException extends Exception {
-	private FunctionObjectBase cause;
+	private Object cause;
 	
 	public CalculationException(
 			String message, 
-			FunctionObjectBase c)
-	{
+			Object c) {
 		super(message);
 		cause = c;
 	}
 	
-	public FunctionObjectBase getCauseObject()
+	public Object getCauseObject()
 	{
 		return cause;
 	}
-
 }

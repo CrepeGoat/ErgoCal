@@ -20,9 +20,8 @@ import com.example.PlainTextPresentation.*;
 public class MainActivity extends Activity implements View.OnClickListener {
 	
 	// Declare Logic Elements
-	private FunctionSource sourceObj;
-	private FunctionObjectBase selectedObj;
-	private FunctionObjectMaker objMaker;
+	private OperatorStack opStack;
+	private int selectionIndex;
 	
 	// Initialize Buttons
 	Button btnEql;
