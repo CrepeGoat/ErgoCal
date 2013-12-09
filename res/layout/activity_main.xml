@@ -53,7 +53,7 @@
 	        android:textSize="12pt"
 	        android:textColor="@color/orange"
 	        android:visibility="visible" 
-	        />"
+	        />
         
         <EditText
             android:id="@+id/numField"
