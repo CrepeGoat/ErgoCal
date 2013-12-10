@@ -11,10 +11,8 @@ import android.widget.TextView;
 import android.view.KeyEvent;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.example.FunctionTree.*;
-import com.example.FunctionExtras.CalculationException;
-import com.example.FunctionExtras.FunctionID;
-import com.example.FunctionPresentation.*;
+import com.example.OperatorStack.*;
+import com.example.FunctionExtras.*;
 import com.example.PlainTextPresentation.*;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -57,7 +55,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		
 		numField = (EditText) findViewById(R.id.numField);
 		ansField = (EditText) findViewById(R.id.ansField);
-		
+		numField.setText("");
+		ansField.setText("");
+
 		// set a listener
 		btnEql.setOnClickListener(this);
 		btnNum.setOnClickListener(this);
@@ -76,29 +76,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			    if (actionId == EditorInfo.IME_ACTION_DONE) {
 			    	// do your stuff here
 			    	try {
-			    		double num = Double.parseDouble(numField.getText());
+			    		double num = Double.parseDouble(numField.getText().toString());
 				    	ansField.setVisibility(0);
 						numField.setVisibility(2);
-						if (selectedObj.getFID() == FunctionID.NUMBER)
-							((FunctionNumber)selectedObj).set(num);
-						else
-						{
-							selectedObj.getRoot().replaceArg(selectedObj,
-									objMaker.number(num).make(FunctionID.NUMBER));
-							objMaker.clear();
-						}
+						opStack.addNumber(selectionIndex, num);
 			    	} catch (NumberFormatException e) {
 			    		//TODO raise alert
 			    	}
-					
 			    }
 			    return false;
 			}
 		});
 		
-		objMaker = new FunctionObjectMaker(new PlainTextRepMaker());
-		sourceObj = (FunctionSource)objMaker.make(FunctionID.SOURCE);
-		selectedObj = sourceObj.getArg();
+		opStack = new OperatorStack(new PlainTextRepMaker());
+		selectionIndex = 0;
     }
 
     @Override
@@ -108,34 +99,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return true;
     }
     
-    public void setSelectObj(FunctionObjectBase target)
+    public void setSelectionIndex(int target)
     {
     	//TODO
-    	//selectedObj
-    }
-    
-    public void insertNewAtSelection(FunctionID ftype)
-    {
-    	FunctionObjectBase rootObj = selectedObj.getRoot();
-    	FunctionObjectBase newObj = objMaker.make(ftype);
-    	rootObj.replaceArg(selectedObj, objMaker.make(ftype));
-    	setSelectObj
+    	//remove highlight from current selection
+    	selectionIndex = target;
+    	//set Highlight pattern for new selection
     }
     
     @Override
 	public void onClick(View v) {
     	// defines the button that has been clicked and performs the
 		// corresponding operation
-    	objMaker.clear();
 		switch (v.getId()) {
 		
 		case R.id.btnEql:
-			double ans;
 			try {
-				ans = sourceObj.calculate();
+				double ans = opStack.getResult();
 				ansField.setText(String.valueOf(ans));
 			} catch (CalculationException ce){
-				setSelectObj(ce.getCauseObject());
+				setSelectionIndex((Integer)ce.getCauseObject());
 				//TODO Print warning to screen w/ string
 				//"One or more objects uninitialized"
 				ansField.setText("");
@@ -143,8 +126,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			break;
 			
 		case R.id.btnNum:
-			if (selectedObj.getFID() == FunctionID.BLANK)
-			{
+			if (opStack.getFuncType(selectionIndex) == FunctionType.BLANK
+					|| opStack.getFuncType(selectionIndex) == FunctionType.NUMBER) {
 				//TODO bring up pop-up keyboard
 				//(On completion of number, replace BLANK with NUMBER,
 				//	and store value. Raise exception on incoherent number input.)
@@ -161,76 +144,50 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		
 		case R.id.btnAdd:
 			// When Add button is clicked...
-			if (selectedObj.getRoot().getFID() == FunctionID.ADD)
-				((FunctionNArgument)selectedObj.getRoot())
-					.addArg(objMaker.make(FunctionID.BLANK));
-			else if (selectedObj.getFID() == FunctionID.ADD)
-				((FunctionNArgument)selectedObj)
-					.addArg(objMaker.make(FunctionID.BLANK));
-			else
-			{
-				objMaker.arg(selectedObj);
-				selectedObj.getRoot().replaceArg(selectedObj,
-						objMaker.make(FunctionID.ADD));
-			}
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.ADD));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnSub:
 			// When Sub button is clicked...
-			objMaker.arg(selectedObj);
-			selectedObj.getRoot().replaceArg(selectedObj,
-					objMaker.make(FunctionID.SUBTRACT));
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.SUBTRACT));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnMult:
 			// When Mult button is clicked...
-			if (selectedObj.getRoot().getFID() == FunctionID.MULTIPLY)
-				((FunctionNArgument)selectedObj.getRoot())
-					.addArg(objMaker.make(FunctionID.BLANK));
-			else if (selectedObj.getFID() == FunctionID.MULTIPLY)
-				((FunctionNArgument)selectedObj)
-					.addArg(objMaker.make(FunctionID.BLANK));
-			else
-			{
-				objMaker.arg(selectedObj);
-				selectedObj.getRoot().replaceArg(selectedObj,
-						objMaker.make(FunctionID.MULTIPLY));
-			}			
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.MULTIPLY));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnDiv:
 			// When Div button is clicked...
-			objMaker.arg(selectedObj);
-			selectedObj.getRoot().replaceArg(selectedObj,
-					objMaker.make(FunctionID.DIVIDE));
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.DIVIDE));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnPow:
 			// When Pow button is clicked...
-			objMaker.arg(selectedObj);
-			selectedObj.getRoot().replaceArg(selectedObj,
-					objMaker.make(FunctionID.POWER));
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.POWER));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnSqr:
 			// When Sqr button is clicked...
-			objMaker.number(2.0);
-			objMaker.arg(selectedObj).arg2(objMaker.make(FunctionID.NUMBER));
-			selectedObj.getRoot().replaceArg(selectedObj,
-					objMaker.make(FunctionID.SQUARE));
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.SQUARE));
+			numField.setText(opStack.getTextRep());
 			break;
 			
 		case R.id.btnSqrt:
 			// When Sqrt button is clicked...
-			objMaker.arg(selectedObj);
-			selectedObj.getRoot().replaceArg(selectedObj,
-					objMaker.make(FunctionID.SQRT));
+			setSelectionIndex(opStack.addFunction(selectionIndex, FunctionType.SQRT));
+			numField.setText(opStack.getTextRep());
 			break;
 
 		default:
 			break;
 		}
-		objMaker.clear();
+
     }
     
 }

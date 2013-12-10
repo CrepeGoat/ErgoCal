@@ -26,6 +26,13 @@ public class OperatorStack {
 	}
 	
 	//--------------------------------------------------------------------
+	//Indexed Get Methods
+	public FunctionType getFuncType(int index) {
+		if (index == -1) return FunctionType.SOURCE;
+		return argList.get(index).getFuncType();
+	}
+	
+	//--------------------------------------------------------------------
 	//Return Methods
 	public double getResult() throws CalculationException {
 		OutputWrapper<Double> tmp = new OutputWrapper<Double>(null,0);
@@ -95,14 +102,27 @@ public class OperatorStack {
 	//--------------------------------------------------------------------
 	// Building Methods
 	public int addFunction(int index, FunctionType ftype) {
-		if (ftype == FunctionType.NUMBER) {
-			if (argList.get(index).getFuncType() == FunctionType.BLANK
-					|| argList.get(index).getFuncType() == FunctionType.NUMBER)
-				argList.set(index, opMaker.make(FunctionType.NUMBER));
-			else
-				throw new RuntimeException("Cannot replace operator with Number");
+		if (!FunctionType.isFunction(ftype)) {
+			throw new RuntimeException("Incorrect function to add non-function object");
 		}
-		else if (FunctionType.isFunction(ftype)) {
+		else {
+			if (FunctionType.isCommutative(ftype)) {
+				if (getFuncType(getRoot(index)) == ftype) {
+					argList.get(getRoot(index)).incrementArgCount();
+					index = getNextInLevel(index);
+					argList.add(index, opMaker.make(FunctionType.BLANK));
+					return index;
+				}
+				else if (getFuncType(index) == ftype) {
+					argList.get(index).incrementArgCount();
+					int N = argList.get(index).getArgCount();
+					++index;
+					for (int i=1; i<N; ++i)
+						index = getNextInLevel(index);
+					argList.add(index, opMaker.make(FunctionType.BLANK));
+					return index;
+				}
+			}
 			int N = argList.get(index).getArgCount();
 			argList.add(index, opMaker.make(ftype));
 			
@@ -122,8 +142,21 @@ public class OperatorStack {
 		return index;
 	}
 	
+	public int addNumber(int index, double d) {
+		if (getFuncType(index) == FunctionType.BLANK
+				|| getFuncType(index) == FunctionType.NUMBER)
+			argList.set(index, opMaker.number(d).make(FunctionType.NUMBER));
+		else
+			throw new RuntimeException("Cannot replace operator with Number");
+		return index;
+	}
+	
 	public int removeFunction(int index) {
-		if (argList.get(index).getFuncType() != FunctionType.BLANK) {
+		if (getFuncType(index) != FunctionType.BLANK) {
+			boolean b = FunctionType.isCommutative(getFuncType(getRoot(index)))
+					&& argList.get(getRoot(index)).getArgCount() > 2;
+			if (b)
+				argList.get(getRoot(index)).decrementArgCount();
 			int N = argList.get(index).getArgCount();
 			int end = index;
 			argList.remove(index);
@@ -131,7 +164,8 @@ public class OperatorStack {
 				end = getNextInLevel(end);
 			argList.subList(index, end).clear();
 			
-			argList.add(index, opMaker.make(FunctionType.BLANK));			
+			if (!b)
+				argList.add(index, opMaker.make(FunctionType.BLANK));			
 		}
 		return index;
 	}

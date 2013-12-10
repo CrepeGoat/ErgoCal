@@ -72,7 +72,7 @@ public class OperatorBuilder {
 		case SQUARE:
 			return new OperatorNumber(2,
 					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					FunctionType.defaultArgCount(FunctionType.NUMBER));
 		default:
 			return null;
 		}
