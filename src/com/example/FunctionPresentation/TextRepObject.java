@@ -1,15 +1,17 @@
-package com.example.PlainTextPresentation;
-import com.example.FunctionPresentation.TextRepInterface;
+package com.example.FunctionPresentation;
 
-public final class PlainTextRepObject implements TextRepInterface{
-
+public final class TextRepObject implements TextRepInterface{
+	
 	private final String pTag1="\\p1", pTag2="\\p2";
 	private String[] strList;
+	private TagBox[] tagList;
 	
-	public PlainTextRepObject(String[] inList) {
-		strList = inList;
+	public TextRepObject(String[] sl, TagBox[] tl) {
+		strList = sl;
+		tagList = tl;
 	}
-	public PlainTextRepObject(String p, String i, String s) {
+	public TextRepObject(String p, String i, String s, TagBox[] tl) {
+		tagList = tl;
 		int n = 0;
 		if (p != null)
 			++n;
@@ -72,6 +74,13 @@ public final class PlainTextRepObject implements TextRepInterface{
 		throw new RuntimeException("");
 	}
 	
-	public void setIdTag(int idTag) {}
+	public void setIdTag(int idTag) {
+		for (TagBox t:tagList) {
+			if (t.isIdTag()) {
+				((IdTagBox) t).setIdTag(idTag);
+				break;
+			}
+		}
+	}
 
 }

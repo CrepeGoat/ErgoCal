@@ -35,8 +35,30 @@ public class OperatorStack {
 	}
 
 	//--------------------------------------------------------------------
-	//Indexed Get Methods
-	//TODO public void setTextHighlight(int index, )
+	//Indexed Set Methods
+	public void setTextHighlight(int index) {
+		argList.get(index).setActiveDisplayFlags(TextRepInterface.HIGHLIGHT);
+		int N = argList.get(index).getArgCount();
+		int start = ++index;
+		for (int i=0; i<N; ++i)
+			index = getNextInLevel(index);
+		for(OperatorBase e:argList.subList(start, index)) {
+			e.setActiveDisplayFlags(TextRepInterface.SUBHIGHLIGHT);
+			e.setInactiveDisplayFlags(TextRepInterface.HIGHLIGHT);
+		}
+	}
+
+	public void unsetTextHighlight(int index) {
+		argList.get(index).setInactiveDisplayFlags
+				(TextRepInterface.HIGHLIGHT | TextRepInterface.SUBHIGHLIGHT);
+		int N = argList.get(index).getArgCount();
+		int start = ++index;
+		for (int i=0; i<N; ++i)
+			index = getNextInLevel(index);
+		for(OperatorBase e:argList.subList(start, index))
+			e.setInactiveDisplayFlags
+					(TextRepInterface.HIGHLIGHT | TextRepInterface.SUBHIGHLIGHT);
+	}
 	
 	//--------------------------------------------------------------------
 	//Return Methods

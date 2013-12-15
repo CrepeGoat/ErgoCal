@@ -114,16 +114,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return true;
     }
     
-    public void setSelectionIndex(int target)
-    {
-    	if (target == 0)
-    		selectionIndex = 0;
-    	else {
-    	//TODO
-    	//remove highlight from current selection
+    public void setSelectionIndex(int target) {
+    	if (selectionIndex != 0)
+    		opStack.unsetTextHighlight(selectionIndex);
+    	
     	selectionIndex = target;
-    	//set Highlight pattern for new selection
-    	}
+    	
+    	if (selectionIndex != 0)
+    		opStack.setTextHighlight(selectionIndex);
     }
     
     @Override

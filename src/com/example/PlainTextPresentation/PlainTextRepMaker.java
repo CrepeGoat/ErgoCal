@@ -1,8 +1,7 @@
 package com.example.PlainTextPresentation;
 
 import com.example.FunctionExtras.FunctionType;
-import com.example.FunctionPresentation.TextRepInterface;
-import com.example.FunctionPresentation.TextRepMakerInterface;
+import com.example.FunctionPresentation.*;
 
 public class PlainTextRepMaker implements TextRepMakerInterface {
 
@@ -14,16 +13,16 @@ public class PlainTextRepMaker implements TextRepMakerInterface {
 		
 		boolean PRE = true;
 		boolean IN = false;
-		
+				
 		switch(id)
 		{
 		case BLANK:
-			return new PlainTextRepObject[]
-					{new PlainTextRepObject(null, "  ", null)};
+			return new TextRepObject[]{
+					new TextRepObject(null, "\u2610", null, new TagBox[0])};
 		case SOURCE:
 		case NUMBER:
-			return new PlainTextRepObject[]
-					{new PlainTextRepObject("",null,"")};
+			return new TextRepObject[]{
+					new TextRepObject("",null,"", new TagBox[0])};
 		case ADD:
 			op = "+";
 			loc = IN;
@@ -33,11 +32,11 @@ public class PlainTextRepMaker implements TextRepMakerInterface {
 			loc = IN;
 			break;
 		case MULTIPLY:
-			op = "x";
+			op = "\u00D7";
 			loc = IN;
 			break;
 		case DIVIDE:
-			op = "/";
+			op = "\u00F7";
 			loc = IN;
 			break;
 		case POWER:
@@ -46,18 +45,24 @@ public class PlainTextRepMaker implements TextRepMakerInterface {
 			loc = IN;
 			break;
 		case SQRT:
-			op = "sqrt(";
+			op = "\u221A(";
 			loc = PRE;
 		default:
 			return null;
 		}
 		
 		if (loc == IN)
-			return new PlainTextRepObject[]
-					{new PlainTextRepObject("\\p1", op, "\\p2")};
+			return new TextRepObject[]{
+					new TextRepObject("\\p1", op, "\\p2", new TagBox[]{
+							new TagBox(TextRepObject.PARENTHESES,true,"\\p1","("),
+							new TagBox(TextRepObject.PARENTHESES,true,"\\p2",")"),
+							new TagBox(TextRepObject.PARENTHESES,false,"\\p1",""),
+							new TagBox(TextRepObject.PARENTHESES,false,"\\p2","")
+						})
+					};
 		else
-			return new PlainTextRepObject[]
-					{new PlainTextRepObject(op, null, ")")};
+			return new TextRepObject[]
+					{new TextRepObject(op, null, ")", new TagBox[0])};
 	}
 
 }

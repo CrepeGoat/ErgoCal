@@ -22,7 +22,7 @@ public class OperatorFunction extends OperatorBase {
 	
 	public String getTextRep(String... strList) {
 		if (display.length == 2)
-			if ((displayFlags & TextRepInterface.COMPRESSION) != 0)
+			if ((displayFlags & TextRepInterface.EXPAND_EXP) == 0)
 				return display[0].getTextRep(displayFlags, strList);
 			else
 				return display[1].getTextRep(displayFlags, strList);
