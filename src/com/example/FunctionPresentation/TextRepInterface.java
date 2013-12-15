@@ -1,17 +1,14 @@
 package com.example.FunctionPresentation;
 
 public interface TextRepInterface {
-	public String getTextRep(String[] strList);
+	public static final byte SUBHIGHLIGHT = 1;
+	public static final byte HIGHLIGHT = 2;
+	public static final byte PARENTHESES = 4;	
+	public static final byte COMPRESSION = 8;
+
+	public <T> String getTextRep(int flags, T data, String[] strList);
+	public String getTextRep(int flags, String... strList);
 	
 	public void setIdTag(int idTag);
 	
-	public void setHighlight();
-	public void setSubHighlight();
-	public void setNoHighlight();
-	
-	//public void setParentheses();
-	//public void setNoParentheses();
-	
-	//public void setTextExpand();
-	//public void setTextCompress();
 }

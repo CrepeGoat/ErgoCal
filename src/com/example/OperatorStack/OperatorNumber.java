@@ -9,15 +9,22 @@ public class OperatorNumber extends OperatorBase {
 	
 	public OperatorNumber(
 			double d,
-			TextRepInterface tr,
-			int count) {
-		super(FunctionType.NUMBER, tr, count);
+			TextRepInterface... tr) {
+		super(FunctionType.NUMBER, tr);
 		value = d;
 	}
-
+	
 	@Override
 	public double getResult(double[] dList) {
 		return value;
+	}
+	
+	public String getTextRep(String... strList) {
+		return display[0].getTextRep(displayFlags, value, strList);
+	}
+	
+	public void setValue(double d) {
+		value = d;
 	}
 
 }

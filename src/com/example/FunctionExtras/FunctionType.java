@@ -52,4 +52,26 @@ public enum FunctionType {
 			return false;
 		}
 	}
+	
+	public byte getOperatorPrecedence(FunctionType ftype) {
+		switch (ftype) {
+		case BLANK:
+		case NUMBER:
+			return 0;
+		case POWER:
+		case SQUARE:
+		case SQRT:
+			return 2;
+		case MULTIPLY:
+		case DIVIDE:
+			return 3;
+		case ADD:
+		case SUBTRACT:
+			return 4;
+		case SOURCE:
+			return (byte) (((byte) ~0) >>> 1);
+		default:
+			return 1;
+		}
+	}
 }

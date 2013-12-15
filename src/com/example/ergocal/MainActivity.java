@@ -2,12 +2,14 @@ package com.example.ergocal;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.KeyEvent;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -34,7 +36,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	
 	// Initialize Edit Text
 	EditText numField;
-	EditText ansField;
+	TextView ansField;
+	
+	private void setHelperMessage(String str) {
+		Toast t = Toast.makeText(
+				getApplicationContext(),
+				str,
+				Toast.LENGTH_SHORT);
+		t.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+		t.show();
+
+	}
 
 	/** Called when the activity is first created. */
     @Override
@@ -54,7 +66,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		btnSqrt = (Button) findViewById(R.id.btnSqrt);
 		
 		numField = (EditText) findViewById(R.id.numField);
-		ansField = (EditText) findViewById(R.id.ansField);
+		ansField = (TextView) findViewById(R.id.ansField);
 		numField.setText("");
 		ansField.setText("");
 
@@ -72,16 +84,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		numField.setOnEditorActionListener(new OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				// TODO Auto-generated method stub
 			    if (actionId == EditorInfo.IME_ACTION_DONE) {
 			    	// do your stuff here
 			    	try {
 			    		double num = Double.parseDouble(numField.getText().toString());
 				    	ansField.setVisibility(0);
 						numField.setVisibility(2);
-						opStack.addNumber(selectionIndex, num);
+						opStack.setNumber(selectionIndex, num);
+						numField.setText("");
 			    	} catch (NumberFormatException e) {
-			    		//TODO raise alert
+			    		setHelperMessage("Invalid number input");
+			    	} catch (AssignmentException e) {
+			    		throw new RuntimeException
+			    				("Invalid target for number assignment");
 			    	}
 			    }
 			    return false;
@@ -101,10 +116,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     
     public void setSelectionIndex(int target)
     {
+    	if (target == 0)
+    		selectionIndex = 0;
+    	else {
     	//TODO
     	//remove highlight from current selection
     	selectionIndex = target;
     	//set Highlight pattern for new selection
+    	}
     }
     
     @Override
@@ -119,8 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				ansField.setText(String.valueOf(ans));
 			} catch (CalculationException ce){
 				setSelectionIndex((Integer)ce.getCauseObject());
-				//TODO Print warning to screen w/ string
-				//"One or more objects uninitialized"
+				setHelperMessage("One or more operator fields uninitialized");
 				ansField.setText("");
 			};
 			break;
@@ -140,6 +158,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				numField.setImeOptions(EditorInfo.IME_ACTION_DONE);
 				
 			}
+			else
+				setHelperMessage("Invalid target for number assignment");
 			break;
 		
 		case R.id.btnAdd:

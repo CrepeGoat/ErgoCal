@@ -18,50 +18,41 @@ public class OperatorBuilder {
 		return this;
 	}
 	
-	public OperatorBase make(FunctionType ftype) {
+	public OperatorBase makeOperator(FunctionType ftype) {
 		switch (ftype) {
 		case BLANK:
-			return new OperatorBlank(trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+			return new OperatorBlank(trMaker.makeTextRep(ftype));
 		case NUMBER:
 			return new OperatorNumber(_number,
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case ADD:
 			return new OperatorFunction(ftype,
 					new FunctionAdd(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case MULTIPLY:
 			return new OperatorFunction(ftype,
 					new FunctionMultiply(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case SUBTRACT:
 			return new OperatorFunction(ftype,
 					new FunctionSubtract(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case DIVIDE:
 			return new OperatorFunction(ftype,
 					new FunctionDivide(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case POWER:
 			return new OperatorFunction(ftype,
 					new FunctionPower(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case SQUARE:
 			return new OperatorFunction(ftype,
 					new FunctionPower(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		case SQRT:
 			return new OperatorFunction(ftype,
 					new FunctionSqrt(),
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(ftype));
+					trMaker.makeTextRep(ftype));
 		default:
 			return null;
 		}
@@ -71,8 +62,7 @@ public class OperatorBuilder {
 		switch (ftype) {
 		case SQUARE:
 			return new OperatorNumber(2,
-					trMaker.makeTextRep(ftype),
-					FunctionType.defaultArgCount(FunctionType.NUMBER));
+					trMaker.makeTextRep(FunctionType.NUMBER));
 		default:
 			return null;
 		}

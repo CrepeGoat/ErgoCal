@@ -3,6 +3,6 @@ import com.example.FunctionExtras.FunctionType;
 
 public interface TextRepMakerInterface {
 	
-	public TextRepInterface makeTextRep(FunctionType id);
+	public TextRepInterface[] makeTextRep(FunctionType ftype);
 
 }

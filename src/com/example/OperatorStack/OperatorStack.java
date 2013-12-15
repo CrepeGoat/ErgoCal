@@ -17,12 +17,14 @@ public class OperatorStack {
 	
 	private ArrayList<OperatorBase> argList;
 	private OperatorBuilder opMaker;
+	private TextRepInterface trSource;
 	
 	// Constructor
 	public OperatorStack(TextRepMakerInterface trm) {
 		opMaker = new OperatorBuilder(trm);
 		argList = new ArrayList<OperatorBase>();
-		argList.add(opMaker.make(FunctionType.BLANK));
+		argList.add(opMaker.makeOperator(FunctionType.BLANK));
+		trSource = trm.makeTextRep(FunctionType.SOURCE)[0];
 	}
 	
 	//--------------------------------------------------------------------
@@ -31,6 +33,10 @@ public class OperatorStack {
 		if (index == -1) return FunctionType.SOURCE;
 		return argList.get(index).getFuncType();
 	}
+
+	//--------------------------------------------------------------------
+	//Indexed Get Methods
+	//TODO public void setTextHighlight(int index, )
 	
 	//--------------------------------------------------------------------
 	//Return Methods
@@ -58,7 +64,7 @@ public class OperatorStack {
 	public String getTextRep() {
 		OutputWrapper<String> tmp = new OutputWrapper<String>(null,0);
 		innerAssembleRep(tmp);
-		return tmp.value;
+		return trSource.getTextRep(0, tmp.value);
 	}
 	private void innerAssembleRep(OutputWrapper<String> box) {
 		String[] strList = new String[argList.get(box.index).getArgCount()];
@@ -92,12 +98,6 @@ public class OperatorStack {
 		} while (tmp > 0 && index < argList.size());
 		return index;
 	}
-	/*
-	//		***Assumes index is not the leftmost node of the level
-	public int getPrevInLevel(int index) {
-		//TODO
-	}
-	*/
 	
 	//--------------------------------------------------------------------
 	// Building Methods
@@ -110,7 +110,7 @@ public class OperatorStack {
 				if (getFuncType(getRoot(index)) == ftype) {
 					argList.get(getRoot(index)).incrementArgCount();
 					index = getNextInLevel(index);
-					argList.add(index, opMaker.make(FunctionType.BLANK));
+					argList.add(index, opMaker.makeOperator(FunctionType.BLANK));
 					return index;
 				}
 				else if (getFuncType(index) == ftype) {
@@ -119,12 +119,12 @@ public class OperatorStack {
 					++index;
 					for (int i=1; i<N; ++i)
 						index = getNextInLevel(index);
-					argList.add(index, opMaker.make(FunctionType.BLANK));
+					argList.add(index, opMaker.makeOperator(FunctionType.BLANK));
 					return index;
 				}
 			}
 			int N = argList.get(index).getArgCount();
-			argList.add(index, opMaker.make(ftype));
+			argList.add(index, opMaker.makeOperator(ftype));
 			
 			++index;
 			if (FunctionType.hasDefaultArg(ftype))
@@ -132,7 +132,7 @@ public class OperatorStack {
 			for (int i=1; i<N; ++i) {
 				// To implement addFunctionReverse, remove next line
 				index = getNextInLevel(index);
-				argList.add(index, opMaker.make(FunctionType.BLANK));
+				argList.add(index, opMaker.makeOperator(FunctionType.BLANK));
 			}
 			if (FunctionType.hasDefaultArg(ftype)) {
 				index = getNextInLevel(index);
@@ -142,13 +142,13 @@ public class OperatorStack {
 		return index;
 	}
 	
-	public int addNumber(int index, double d) {
-		if (getFuncType(index) == FunctionType.BLANK
-				|| getFuncType(index) == FunctionType.NUMBER)
-			argList.set(index, opMaker.number(d).make(FunctionType.NUMBER));
+	public void setNumber(int index, double num) throws AssignmentException{
+		if (getFuncType(index) == FunctionType.BLANK)
+			argList.set(index, opMaker.number(num).makeOperator(FunctionType.NUMBER));
+		else if (getFuncType(index) == FunctionType.NUMBER)
+			((OperatorNumber)argList.get(index)).setValue(num);
 		else
-			throw new RuntimeException("Cannot replace operator with Number");
-		return index;
+			throw new AssignmentException("Cannot replace selected field with Number");
 	}
 	
 	public int removeFunction(int index) {
@@ -165,7 +165,7 @@ public class OperatorStack {
 			argList.subList(index, end).clear();
 			
 			if (!b)
-				argList.add(index, opMaker.make(FunctionType.BLANK));			
+				argList.add(index, opMaker.makeOperator(FunctionType.BLANK));			
 		}
 		return index;
 	}

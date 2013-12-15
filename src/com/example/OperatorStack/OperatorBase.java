@@ -6,17 +6,18 @@ import com.example.FunctionPresentation.TextRepInterface;
 abstract class OperatorBase {
 	
 	abstract public double getResult(double[] dList) throws CalculationException;
+	abstract public String getTextRep(String... strList);
 
 	private FunctionType ftype;
-	private TextRepInterface display;
+	protected TextRepInterface[] display;
+	protected int displayFlags=0;
 	private int argCount;
 	
 	public OperatorBase(FunctionType ft,
-			TextRepInterface tr,
-			int count) {
+			TextRepInterface... tr) {
 		ftype = ft;
 		display = tr;
-		argCount = count;
+		argCount = FunctionType.defaultArgCount(ft);
 	}
 	
 	public int getArgCount() {
@@ -33,11 +34,18 @@ abstract class OperatorBase {
 		return ftype;
 	}
 	
-	public String getTextRep(String[] strList) {
-		return display.getTextRep(strList);
+	public void setIdTag(int tag) {
+		for (int i=0; i<display.length; ++i) {
+			display[i].setIdTag(tag);
+		}
 	}
-	public void setIdTag(int i) {
-		display.setIdTag(i);
+	
+	public void setActiveDisplayFlags(int flags) {
+		displayFlags = displayFlags | flags;
+	}
+
+	public void setInactiveDisplayFlags(int flags) {
+		displayFlags = displayFlags & (~flags);
 	}
 
 }
