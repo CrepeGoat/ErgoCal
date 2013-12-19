@@ -2,7 +2,6 @@ package com.example.FunctionPresentation;
 
 public final class TextRepObject implements TextRepInterface{
 	
-	private final String pTag1="\\p1", pTag2="\\p2";
 	private String[] strList;
 	private TagBox[] tagList;
 	
@@ -37,41 +36,43 @@ public final class TextRepObject implements TextRepInterface{
 	}
 		
 	public String getTextRep(int flags, String... inList) {
+		//replaces tags with correct strings (based on flag state)
+		String[] tmpList = new String[strList.length];
+		int i;
+		for (i=0; i<strList.length; ++i) {
+			tmpList[i] = strList[i];
+		}
+		for (TagBox tb:tagList) {
+			if (tb.isActive(flags)) {
+				for (i=0; i<tmpList.length; ++i) {
+					tmpList[i] = tb.replaceTags(tmpList[i]);
+				}
+			}
+		}
+
 		//Concatenates strings into single output string
-		String rStr = strList[0];
+		String rStr = tmpList[0];
 		
 		if (inList.length > 0) {
-			rStr += inList[0] + strList[1];
+			rStr += inList[0] + tmpList[1];
 			
 			if (inList.length > 1) {
 				rStr += inList[1];
-				for (int i=2; i<inList.length; ++i) {
-					rStr += strList[1] + inList[i];
+				for (i=2; i<inList.length; ++i) {
+					rStr += tmpList[1] + inList[i];
 				}
-				rStr += strList[2];
+				rStr += tmpList[2];
 			}
 		}
 		
-		//replaces tags with correct strings (based on flag state)
-		String p1, p2;
-		if ((flags & PARENTHESES) != 0) {
-			p1="(";
-			p2=")";
-		}
-		else {
-			p1="";
-			p2="";
-		}
-		rStr = rStr.replaceAll(pTag1, p1);
-		rStr = rStr.replaceAll(pTag2, p2);
 		return rStr;
 	}
 	
-	public String getTextRep(int flags, double value, String[] strList) {
-		return getTextRep(flags, String.valueOf(value));
-	}
 	public <T> String getTextRep(int flags, T data, String[] strList) {
-		throw new RuntimeException("");
+		if (Double.TYPE.equals(data.getClass()))
+			return getTextRep(flags, String.valueOf((Double)data));
+		else
+			throw new RuntimeException("");
 	}
 	
 	public void setIdTag(int idTag) {

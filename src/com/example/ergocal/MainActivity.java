@@ -67,8 +67,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		
 		numField = (EditText) findViewById(R.id.numField);
 		ansField = (TextView) findViewById(R.id.ansField);
-		numField.setText("");
-		ansField.setText("");
 
 		// set a listener
 		btnEql.setOnClickListener(this);
@@ -103,8 +101,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			}
 		});
 		
+		//build internal data structures
 		opStack = new OperatorStack(new PlainTextRepMaker());
 		selectionIndex = 0;
+		//set current display
+		numField.setText(opStack.getTextRep());
+		ansField.setText("");
     }
 
     @Override

@@ -1,18 +1,33 @@
 package com.example.OperatorStack;
 
-import java.util.ArrayList;
 import com.example.FunctionPresentation.*;
 import com.example.FunctionExtras.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.lang.reflect.Array;
 
 public class OperatorStack {
 
-	private class OutputWrapper<T> {
+	/*
+	private static class OutputWrapper<T> {
 		public T value;
 		public int index;
 		public OutputWrapper (T t, int i) {
 			value = t;
 			index = i;
 		}
+	}//*/
+	private static double[] toArray(List<Double> inList) {
+		double[] tmp = new double[inList.size()];
+		for (int i=0; i<tmp.length; ++i)
+			tmp[i] = inList.get(i);
+		return tmp;
+	}
+	private static <T> T[] toArray(List<?> list, Class<T> c) {
+	    @SuppressWarnings("unchecked")
+	    T[] result = (T[]) Array.newInstance(c, list.size());
+	    result = list.toArray(result);
+	    return (T[]) result;
 	}
 	
 	private ArrayList<OperatorBase> argList;
@@ -63,11 +78,16 @@ public class OperatorStack {
 	//--------------------------------------------------------------------
 	//Return Methods
 	public double getResult() throws CalculationException {
+		/*
 		OutputWrapper<Double> tmp = new OutputWrapper<Double>(null,0);
 		innerCalc(tmp);
 		return tmp.value;
+		/*/
+		return innerCalc();
+		//*/
 	}
 	
+	/*
 	private void innerCalc(OutputWrapper<Double> box) throws CalculationException {
 		double[] vlist = new double[argList.get(box.index).getArgCount()];
 		for (int i=0; i<vlist.length; ++i) {
@@ -81,13 +101,29 @@ public class OperatorStack {
 			((OperatorBase)e.getCauseObject()).setIdTag(box.index);
 			throw e;
 		}
+	}//*/
+	private double innerCalc() throws CalculationException {
+		ArrayList<Double> dList = new ArrayList<Double>();
+		for (int i=argList.size()-1; i>=0; --i) {
+			dList.add(0, argList.get(i).getResult(
+					toArray(dList.subList(0, argList.get(i).getArgCount())) ));
+			dList.subList(1, argList.get(i).getArgCount()+1).clear();
+		}
+		if (dList.size() != 1)
+			throw new RuntimeException();
+		return dList.get(0);
 	}
 
 	public String getTextRep() {
+		/*
 		OutputWrapper<String> tmp = new OutputWrapper<String>(null,0);
 		innerAssembleRep(tmp);
 		return trSource.getTextRep(0, tmp.value);
+		/*/
+		return trSource.getTextRep(0, innerAssembleRep());
+		//*/
 	}
+	/*
 	private void innerAssembleRep(OutputWrapper<String> box) {
 		String[] strList = new String[argList.get(box.index).getArgCount()];
 		for (int i=0; i<strList.length; ++i) {
@@ -97,6 +133,17 @@ public class OperatorStack {
 		}
 		argList.get(box.index).setIdTag(box.index);
 		box.value = argList.get(box.index).getTextRep(strList);		
+	}//*/
+	private String innerAssembleRep() {
+		ArrayList<String> strList = new ArrayList<String>();
+		for (int i=argList.size()-1; i>=0; --i) {
+			strList.add(0, argList.get(i).getTextRep(
+					toArray(strList.subList(0, argList.get(i).getArgCount()), String.class) ));
+			strList.subList(1, 1+argList.get(i).getArgCount()).clear();
+		}
+		if (strList.size() != 1)
+			throw new RuntimeException();
+		return strList.get(0);
 	}
 
 	//--------------------------------------------------------------------

@@ -23,8 +23,7 @@ public class TagBox {
 		return tag;
 	}
 	
-	public String replaceTags(int flags, String input) {
+	public String replaceTags(String input) {
 		return input.replaceAll(tag, insert);
-		
 	}
 }

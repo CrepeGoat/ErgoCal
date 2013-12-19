@@ -69,7 +69,7 @@ public enum FunctionType {
 		case SUBTRACT:
 			return 4;
 		case SOURCE:
-			return (byte) (((byte) ~0) >>> 1);
+			return Byte.MAX_VALUE;
 		default:
 			return 1;
 		}
